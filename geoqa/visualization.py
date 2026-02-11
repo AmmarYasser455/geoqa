@@ -7,14 +7,12 @@ custom styling, and data popups.
 
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Optional
 
 import geopandas as gpd
-import numpy as np
 
 try:
     import folium
-    from folium.plugins import MarkerCluster
 
     HAS_FOLIUM = True
 except ImportError:
@@ -62,8 +60,7 @@ class MapVisualizer:
         """
         if not HAS_FOLIUM:
             raise ImportError(
-                "folium is required for map visualization. "
-                "Install it with: pip install folium"
+                "folium is required for map visualization. " "Install it with: pip install folium"
             )
 
         if len(self._gdf) == 0:
@@ -213,10 +210,14 @@ class MapVisualizer:
                 valid_gdf.__geo_interface__,
                 name=name,
                 style_function=lambda feature, s=style: s,
-                tooltip=folium.GeoJsonTooltip(
-                    fields=attr_cols,
-                    aliases=attr_cols,
-                ) if attr_cols else None,
+                tooltip=(
+                    folium.GeoJsonTooltip(
+                        fields=attr_cols,
+                        aliases=attr_cols,
+                    )
+                    if attr_cols
+                    else None
+                ),
             )
             geojson.add_to(m)
         except Exception:

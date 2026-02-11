@@ -122,9 +122,27 @@ class TestNullHeatmap:
 class TestChecksSummaryBar:
     def test_mixed_checks(self):
         checks = [
-            {"Check": "Validity", "Status": "PASS", "Count": 0, "Severity": "None", "Details": "All valid"},
-            {"Check": "Empty", "Status": "FAIL", "Count": 5, "Severity": "High", "Details": "5 empty"},
-            {"Check": "CRS", "Status": "WARN", "Count": 1, "Severity": "Medium", "Details": "Warning"},
+            {
+                "Check": "Validity",
+                "Status": "PASS",
+                "Count": 0,
+                "Severity": "None",
+                "Details": "All valid",
+            },
+            {
+                "Check": "Empty",
+                "Status": "FAIL",
+                "Count": 5,
+                "Severity": "High",
+                "Details": "5 empty",
+            },
+            {
+                "Check": "CRS",
+                "Status": "WARN",
+                "Count": 1,
+                "Severity": "Medium",
+                "Details": "Warning",
+            },
         ]
         fig = checks_summary_bar(checks)
         assert isinstance(fig, plt.Figure)

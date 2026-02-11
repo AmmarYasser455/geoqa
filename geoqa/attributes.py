@@ -7,10 +7,9 @@ data types, null counts, unique values, and descriptive statistics.
 
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 import geopandas as gpd
-import numpy as np
 import pandas as pd
 
 
@@ -190,7 +189,5 @@ class AttributeProfiler:
             ValueError: If column not found.
         """
         if col not in self._attr_cols:
-            raise ValueError(
-                f"Column '{col}' not found. Available: {self._attr_cols}"
-            )
+            raise ValueError(f"Column '{col}' not found. Available: {self._attr_cols}")
         return self._profile_column(col)

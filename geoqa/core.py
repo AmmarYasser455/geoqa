@@ -250,49 +250,57 @@ class GeoProfile:
 
         # Geometry validity
         invalid = self._geometry_results.get("invalid_count", 0)
-        checks.append({
-            "Check": "Geometry Validity",
-            "Status": "PASS" if invalid == 0 else "FAIL",
-            "Count": invalid,
-            "Severity": "High" if invalid > 0 else "None",
-            "Details": f"{invalid} invalid geometries found"
-            if invalid > 0
-            else "All geometries valid",
-        })
+        checks.append(
+            {
+                "Check": "Geometry Validity",
+                "Status": "PASS" if invalid == 0 else "FAIL",
+                "Count": invalid,
+                "Severity": "High" if invalid > 0 else "None",
+                "Details": (
+                    f"{invalid} invalid geometries found" if invalid > 0 else "All geometries valid"
+                ),
+            }
+        )
 
         # Empty geometries
         empty = self._geometry_results.get("empty_count", 0)
-        checks.append({
-            "Check": "Empty Geometries",
-            "Status": "PASS" if empty == 0 else "WARN",
-            "Count": empty,
-            "Severity": "Medium" if empty > 0 else "None",
-            "Details": f"{empty} empty geometries found"
-            if empty > 0
-            else "No empty geometries",
-        })
+        checks.append(
+            {
+                "Check": "Empty Geometries",
+                "Status": "PASS" if empty == 0 else "WARN",
+                "Count": empty,
+                "Severity": "Medium" if empty > 0 else "None",
+                "Details": (
+                    f"{empty} empty geometries found" if empty > 0 else "No empty geometries"
+                ),
+            }
+        )
 
         # Duplicate geometries
         dups = self._geometry_results.get("duplicate_count", 0)
-        checks.append({
-            "Check": "Duplicate Geometries",
-            "Status": "PASS" if dups == 0 else "WARN",
-            "Count": dups,
-            "Severity": "Medium" if dups > 0 else "None",
-            "Details": f"{dups} duplicate geometries found"
-            if dups > 0
-            else "No duplicate geometries",
-        })
+        checks.append(
+            {
+                "Check": "Duplicate Geometries",
+                "Status": "PASS" if dups == 0 else "WARN",
+                "Count": dups,
+                "Severity": "Medium" if dups > 0 else "None",
+                "Details": (
+                    f"{dups} duplicate geometries found" if dups > 0 else "No duplicate geometries"
+                ),
+            }
+        )
 
         # CRS defined
         has_crs = self.crs is not None
-        checks.append({
-            "Check": "CRS Defined",
-            "Status": "PASS" if has_crs else "FAIL",
-            "Count": 1 if has_crs else 0,
-            "Severity": "High" if not has_crs else "None",
-            "Details": f"CRS: {self.crs}" if has_crs else "No CRS defined",
-        })
+        checks.append(
+            {
+                "Check": "CRS Defined",
+                "Status": "PASS" if has_crs else "FAIL",
+                "Count": 1 if has_crs else 0,
+                "Severity": "High" if not has_crs else "None",
+                "Details": f"CRS: {self.crs}" if has_crs else "No CRS defined",
+            }
+        )
 
         # Null attributes
         nulls = self._attribute_results.get("total_nulls", 0)
@@ -306,23 +314,27 @@ class GeoProfile:
         elif null_pct > 0:
             severity = "Low"
 
-        checks.append({
-            "Check": "Attribute Completeness",
-            "Status": "PASS" if null_pct < 5 else ("WARN" if null_pct < 20 else "FAIL"),
-            "Count": nulls,
-            "Severity": severity,
-            "Details": f"{nulls} null values ({null_pct:.1f}% of all cells)",
-        })
+        checks.append(
+            {
+                "Check": "Attribute Completeness",
+                "Status": "PASS" if null_pct < 5 else ("WARN" if null_pct < 20 else "FAIL"),
+                "Count": nulls,
+                "Severity": severity,
+                "Details": f"{nulls} null values ({null_pct:.1f}% of all cells)",
+            }
+        )
 
         # Mixed geometry types
         mixed = self._geometry_results.get("mixed_types", False)
-        checks.append({
-            "Check": "Homogeneous Geometry Types",
-            "Status": "PASS" if not mixed else "WARN",
-            "Count": len(self._geometry_results.get("geometry_types", {})),
-            "Severity": "Low" if mixed else "None",
-            "Details": "Mixed geometry types detected" if mixed else "Single geometry type",
-        })
+        checks.append(
+            {
+                "Check": "Homogeneous Geometry Types",
+                "Status": "PASS" if not mixed else "WARN",
+                "Count": len(self._geometry_results.get("geometry_types", {})),
+                "Severity": "Low" if mixed else "None",
+                "Details": "Mixed geometry types detected" if mixed else "Single geometry type",
+            }
+        )
 
         return pd.DataFrame(checks)
 

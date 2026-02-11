@@ -7,10 +7,9 @@ and geometric measurements for the dataset.
 
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 import geopandas as gpd
-import numpy as np
 import pandas as pd
 
 
@@ -189,27 +188,31 @@ class SpatialAnalyzer:
         for idx, row in self._gdf.iterrows():
             geom = row.geometry
             if geom is None or geom.is_empty:
-                data.append({
-                    "index": idx,
-                    "geom_type": None,
-                    "area": 0,
-                    "length": 0,
-                    "centroid_x": None,
-                    "centroid_y": None,
-                    "is_valid": False,
-                    "is_empty": geom is None or (geom is not None and geom.is_empty),
-                })
+                data.append(
+                    {
+                        "index": idx,
+                        "geom_type": None,
+                        "area": 0,
+                        "length": 0,
+                        "centroid_x": None,
+                        "centroid_y": None,
+                        "is_valid": False,
+                        "is_empty": geom is None or (geom is not None and geom.is_empty),
+                    }
+                )
             else:
                 centroid = geom.centroid
-                data.append({
-                    "index": idx,
-                    "geom_type": geom.geom_type,
-                    "area": round(geom.area, 6),
-                    "length": round(geom.length, 6),
-                    "centroid_x": round(centroid.x, 6),
-                    "centroid_y": round(centroid.y, 6),
-                    "is_valid": geom.is_valid,
-                    "is_empty": geom.is_empty,
-                })
+                data.append(
+                    {
+                        "index": idx,
+                        "geom_type": geom.geom_type,
+                        "area": round(geom.area, 6),
+                        "length": round(geom.length, 6),
+                        "centroid_x": round(centroid.x, 6),
+                        "centroid_y": round(centroid.y, 6),
+                        "is_valid": geom.is_valid,
+                        "is_empty": geom.is_empty,
+                    }
+                )
 
         return pd.DataFrame(data)

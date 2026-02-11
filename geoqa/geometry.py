@@ -428,7 +428,7 @@ class TopologyChecker:
                 area = geom.area
                 perimeter = geom.length
                 if perimeter > 0:
-                    compactness = (4 * np.pi * area) / (perimeter ** 2)
+                    compactness = (4 * np.pi * area) / (perimeter**2)
                     if compactness < compactness_threshold:
                         sliver_indices.append(idx)
             except Exception:

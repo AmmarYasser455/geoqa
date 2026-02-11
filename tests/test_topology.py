@@ -93,12 +93,14 @@ class TestTopologyChecker:
 
     def test_precision_with_high_decimal(self):
         """High-precision coordinates should be flagged."""
-        p = Polygon([
-            (31.123456789012345, 30.123456789012345),
-            (31.223456789012345, 30.123456789012345),
-            (31.223456789012345, 30.223456789012345),
-            (31.123456789012345, 30.223456789012345),
-        ])
+        p = Polygon(
+            [
+                (31.123456789012345, 30.123456789012345),
+                (31.223456789012345, 30.123456789012345),
+                (31.223456789012345, 30.223456789012345),
+                (31.123456789012345, 30.223456789012345),
+            ]
+        )
         gdf = gpd.GeoDataFrame(geometry=[p], crs="EPSG:4326")
         tc = TopologyChecker(gdf)
         result = tc.check_coordinate_precision(max_decimals=6)

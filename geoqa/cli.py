@@ -7,7 +7,6 @@ assessment via the `geoqa` command.
 
 from __future__ import annotations
 
-from pathlib import Path
 
 import click
 
@@ -91,7 +90,9 @@ def check(filepath: str):
         checks_df = gp.quality_checks()
 
         for _, row in checks_df.iterrows():
-            status_icon = "✅" if row["Status"] == "PASS" else ("❌" if row["Status"] == "FAIL" else "⚠️")
+            status_icon = (
+                "✅" if row["Status"] == "PASS" else ("❌" if row["Status"] == "FAIL" else "⚠️")
+            )
             click.echo(f"  {status_icon} {row['Check']}: {row['Details']}")
 
         click.echo(f"\n  📊 Quality Score: {gp.quality_score:.1f}/100\n")
@@ -127,7 +128,7 @@ def show(filepath: str, output: str | None):
             with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as f:
                 m.save(f.name)
                 webbrowser.open(f"file://{f.name}")
-                click.echo(f"🗺️  Map opened in browser.")
+                click.echo("🗺️  Map opened in browser.")
     except Exception as e:
         click.echo(f"❌ Error: {e}", err=True)
         raise SystemExit(1)

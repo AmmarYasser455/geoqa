@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import base64
 import io
-from typing import Any, Optional
+from typing import Any
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -36,10 +36,10 @@ PALETTE = {
 }
 
 QUALITY_COLORS = {
-    "excellent": "#16a34a",   # green  ≥ 90
-    "good": "#65a30d",        # lime   ≥ 75
-    "fair": "#f59e0b",        # amber  ≥ 50
-    "poor": "#dc2626",        # red    < 50
+    "excellent": "#16a34a",  # green  ≥ 90
+    "good": "#65a30d",  # lime   ≥ 75
+    "fair": "#f59e0b",  # amber  ≥ 50
+    "poor": "#dc2626",  # red    < 50
 }
 
 
@@ -57,8 +57,9 @@ def _quality_color(score: float) -> str:
 def _fig_to_base64(fig: plt.Figure, dpi: int = 150) -> str:
     """Convert a matplotlib figure to a base64-encoded PNG string."""
     buf = io.BytesIO()
-    fig.savefig(buf, format="png", dpi=dpi, bbox_inches="tight",
-                facecolor=PALETTE["bg"], edgecolor="none")
+    fig.savefig(
+        buf, format="png", dpi=dpi, bbox_inches="tight", facecolor=PALETTE["bg"], edgecolor="none"
+    )
     plt.close(fig)
     buf.seek(0)
     return base64.b64encode(buf.read()).decode("utf-8")
@@ -67,12 +68,15 @@ def _fig_to_base64(fig: plt.Figure, dpi: int = 150) -> str:
 def _fig_to_html_img(fig: plt.Figure, dpi: int = 150, alt: str = "chart") -> str:
     """Convert a matplotlib figure to an <img> HTML tag."""
     b64 = _fig_to_base64(fig, dpi=dpi)
-    return f'<img src="data:image/png;base64,{b64}" alt="{alt}" style="max-width:100%;height:auto;" />'
+    return (
+        f'<img src="data:image/png;base64,{b64}" alt="{alt}" style="max-width:100%;height:auto;" />'
+    )
 
 
 # ────────────────────────────────────────────────────────────────────────
 #  Chart generators
 # ────────────────────────────────────────────────────────────────────────
+
 
 def quality_gauge(score: float, size: tuple[float, float] = (4, 4)) -> plt.Figure:
     """Create a donut-style quality score gauge.
@@ -97,10 +101,17 @@ def quality_gauge(score: float, size: tuple[float, float] = (4, 4)) -> plt.Figur
     )
 
     # Center label
-    ax.text(0, 0.08, f"{score:.0f}", ha="center", va="center",
-            fontsize=28, fontweight="bold", color=color)
-    ax.text(0, -0.18, "Quality Score", ha="center", va="center",
-            fontsize=9, color=PALETTE["text"])
+    ax.text(
+        0,
+        0.08,
+        f"{score:.0f}",
+        ha="center",
+        va="center",
+        fontsize=28,
+        fontweight="bold",
+        color=color,
+    )
+    ax.text(0, -0.18, "Quality Score", ha="center", va="center", fontsize=9, color=PALETTE["text"])
 
     ax.set_title("")
     return fig
@@ -121,8 +132,15 @@ def geometry_type_pie(
     """
     if not type_counts:
         fig, ax = plt.subplots(figsize=size)
-        ax.text(0.5, 0.5, "No geometry data", ha="center", va="center",
-                fontsize=12, color=PALETTE["muted"])
+        ax.text(
+            0.5,
+            0.5,
+            "No geometry data",
+            ha="center",
+            va="center",
+            fontsize=12,
+            color=PALETTE["muted"],
+        )
         ax.axis("off")
         return fig
 
@@ -150,8 +168,9 @@ def geometry_type_pie(
         t.set_fontsize(8)
         t.set_fontweight("bold")
 
-    ax.set_title("Geometry Type Distribution", fontsize=11,
-                 fontweight="bold", color=PALETTE["text"], pad=12)
+    ax.set_title(
+        "Geometry Type Distribution", fontsize=11, fontweight="bold", color=PALETTE["text"], pad=12
+    )
 
     return fig
 
@@ -171,8 +190,15 @@ def attribute_completeness_bar(
     """
     if not completeness:
         fig, ax = plt.subplots(figsize=(7, 3))
-        ax.text(0.5, 0.5, "No attribute data", ha="center", va="center",
-                fontsize=12, color=PALETTE["muted"])
+        ax.text(
+            0.5,
+            0.5,
+            "No attribute data",
+            ha="center",
+            va="center",
+            fontsize=12,
+            color=PALETTE["muted"],
+        )
         ax.axis("off")
         return fig
 
@@ -200,18 +226,26 @@ def attribute_completeness_bar(
         else:
             bar_colors.append(QUALITY_COLORS["poor"])
 
-    bars = ax.barh(display_names, values, color=bar_colors, edgecolor=PALETTE["bg"],
-                   linewidth=0.5, height=0.65)
+    bars = ax.barh(
+        display_names, values, color=bar_colors, edgecolor=PALETTE["bg"], linewidth=0.5, height=0.65
+    )
 
     # Value labels
     for bar, val in zip(bars, values):
-        ax.text(min(val + 1, 101), bar.get_y() + bar.get_height() / 2,
-                f"{val:.1f}%", va="center", fontsize=8, color=PALETTE["text"])
+        ax.text(
+            min(val + 1, 101),
+            bar.get_y() + bar.get_height() / 2,
+            f"{val:.1f}%",
+            va="center",
+            fontsize=8,
+            color=PALETTE["text"],
+        )
 
     ax.set_xlim(0, 110)
     ax.set_xlabel("Completeness (%)", fontsize=9, color=PALETTE["text"])
-    ax.set_title("Attribute Completeness", fontsize=11,
-                 fontweight="bold", color=PALETTE["text"], pad=12)
+    ax.set_title(
+        "Attribute Completeness", fontsize=11, fontweight="bold", color=PALETTE["text"], pad=12
+    )
     ax.tick_params(axis="y", labelsize=8)
     ax.tick_params(axis="x", labelsize=8)
     ax.spines["top"].set_visible(False)
@@ -251,25 +285,38 @@ def distribution_histogram(
     fig.patch.set_facecolor(PALETTE["bg"])
 
     if len(arr) == 0:
-        ax.text(0.5, 0.5, "No data", ha="center", va="center",
-                fontsize=12, color=PALETTE["muted"])
+        ax.text(0.5, 0.5, "No data", ha="center", va="center", fontsize=12, color=PALETTE["muted"])
         ax.axis("off")
         return fig
 
-    ax.hist(arr, bins=bins, color=PALETTE["primary"], edgecolor=PALETTE["bg"],
-            linewidth=0.5, alpha=0.85)
+    ax.hist(
+        arr, bins=bins, color=PALETTE["primary"], edgecolor=PALETTE["bg"], linewidth=0.5, alpha=0.85
+    )
 
     xlabel = f"{label} ({units})" if units else label
     ax.set_xlabel(xlabel, fontsize=9, color=PALETTE["text"])
     ax.set_ylabel("Frequency", fontsize=9, color=PALETTE["text"])
-    ax.set_title(f"{label} Distribution", fontsize=11,
-                 fontweight="bold", color=PALETTE["text"], pad=12)
+    ax.set_title(
+        f"{label} Distribution", fontsize=11, fontweight="bold", color=PALETTE["text"], pad=12
+    )
 
     # Stats annotation
     mean_val = float(np.mean(arr))
     median_val = float(np.median(arr))
-    ax.axvline(mean_val, color=PALETTE["danger"], linestyle="--", linewidth=1, label=f"Mean: {mean_val:.4g}")
-    ax.axvline(median_val, color=PALETTE["success"], linestyle="-.", linewidth=1, label=f"Median: {median_val:.4g}")
+    ax.axvline(
+        mean_val,
+        color=PALETTE["danger"],
+        linestyle="--",
+        linewidth=1,
+        label=f"Mean: {mean_val:.4g}",
+    )
+    ax.axvline(
+        median_val,
+        color=PALETTE["success"],
+        linestyle="-.",
+        linewidth=1,
+        label=f"Median: {median_val:.4g}",
+    )
     ax.legend(fontsize=8, framealpha=0.8)
 
     ax.spines["top"].set_visible(False)
@@ -299,8 +346,9 @@ def null_heatmap(
     """
     if not null_counts or total_rows == 0:
         fig, ax = plt.subplots(figsize=(7, 3))
-        ax.text(0.5, 0.5, "No null data", ha="center", va="center",
-                fontsize=12, color=PALETTE["muted"])
+        ax.text(
+            0.5, 0.5, "No null data", ha="center", va="center", fontsize=12, color=PALETTE["muted"]
+        )
         ax.axis("off")
         return fig
 
@@ -308,9 +356,15 @@ def null_heatmap(
     has_nulls = {k: v for k, v in null_counts.items() if v > 0}
     if not has_nulls:
         fig, ax = plt.subplots(figsize=(7, 2))
-        ax.text(0.5, 0.5, "No null values — all columns complete ✓",
-                ha="center", va="center", fontsize=11,
-                color=QUALITY_COLORS["excellent"])
+        ax.text(
+            0.5,
+            0.5,
+            "No null values — all columns complete ✓",
+            ha="center",
+            va="center",
+            fontsize=11,
+            color=QUALITY_COLORS["excellent"],
+        )
         ax.axis("off")
         return fig
 
@@ -335,17 +389,24 @@ def null_heatmap(
         else:
             colors.append(PALETTE["warning"])
 
-    bars = ax.barh(display_names, pcts, color=colors, edgecolor=PALETTE["bg"],
-                   linewidth=0.5, height=0.65)
+    bars = ax.barh(
+        display_names, pcts, color=colors, edgecolor=PALETTE["bg"], linewidth=0.5, height=0.65
+    )
 
     for bar, pct, count in zip(bars, pcts, counts):
-        ax.text(pct + 0.8, bar.get_y() + bar.get_height() / 2,
-                f"{count:,} ({pct:.1f}%)", va="center", fontsize=8,
-                color=PALETTE["text"])
+        ax.text(
+            pct + 0.8,
+            bar.get_y() + bar.get_height() / 2,
+            f"{count:,} ({pct:.1f}%)",
+            va="center",
+            fontsize=8,
+            color=PALETTE["text"],
+        )
 
     ax.set_xlabel("Null Percentage (%)", fontsize=9, color=PALETTE["text"])
-    ax.set_title("Null Values by Column", fontsize=11,
-                 fontweight="bold", color=PALETTE["text"], pad=12)
+    ax.set_title(
+        "Null Values by Column", fontsize=11, fontweight="bold", color=PALETTE["text"], pad=12
+    )
     ax.tick_params(axis="y", labelsize=8)
     ax.tick_params(axis="x", labelsize=8)
     ax.spines["top"].set_visible(False)
@@ -372,8 +433,9 @@ def checks_summary_bar(
     """
     if not checks:
         fig, ax = plt.subplots(figsize=size)
-        ax.text(0.5, 0.5, "No check data", ha="center", va="center",
-                fontsize=12, color=PALETTE["muted"])
+        ax.text(
+            0.5, 0.5, "No check data", ha="center", va="center", fontsize=12, color=PALETTE["muted"]
+        )
         ax.axis("off")
         return fig
 
@@ -383,7 +445,6 @@ def checks_summary_bar(
     fig, ax = plt.subplots(figsize=size)
     fig.patch.set_facecolor(PALETTE["bg"])
 
-    y_pos = range(len(names))
     colors = []
     for s in statuses:
         if s == "PASS":
@@ -394,21 +455,30 @@ def checks_summary_bar(
             colors.append(QUALITY_COLORS["poor"])
 
     # Simple indicator bars (binary: 1 for each check)
-    ax.barh(names, [1] * len(names), color=colors, edgecolor=PALETTE["bg"],
-            linewidth=0.5, height=0.6)
+    ax.barh(
+        names, [1] * len(names), color=colors, edgecolor=PALETTE["bg"], linewidth=0.5, height=0.6
+    )
 
     for i, (status, check) in enumerate(zip(statuses, checks)):
         detail_txt = check.get("Details", "")
         if len(detail_txt) > 50:
             detail_txt = detail_txt[:47] + "..."
-        ax.text(0.5, i, f"{status}  —  {detail_txt}",
-                ha="center", va="center", fontsize=8,
-                fontweight="bold", color="white")
+        ax.text(
+            0.5,
+            i,
+            f"{status}  —  {detail_txt}",
+            ha="center",
+            va="center",
+            fontsize=8,
+            fontweight="bold",
+            color="white",
+        )
 
     ax.set_xlim(0, 1)
     ax.set_xticks([])
-    ax.set_title("Quality Check Results", fontsize=11,
-                 fontweight="bold", color=PALETTE["text"], pad=12)
+    ax.set_title(
+        "Quality Check Results", fontsize=11, fontweight="bold", color=PALETTE["text"], pad=12
+    )
     ax.tick_params(axis="y", labelsize=9)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
@@ -423,6 +493,7 @@ def checks_summary_bar(
 # ────────────────────────────────────────────────────────────────────────
 #  Convenience: generate all charts for a GeoProfile
 # ────────────────────────────────────────────────────────────────────────
+
 
 def generate_all_charts(profile) -> dict[str, str]:
     """Generate all chart images for a GeoProfile as base64-encoded PNGs.
@@ -470,16 +541,18 @@ def generate_all_charts(profile) -> dict[str, str]:
             lambda g: g.area if g is not None and not g.is_empty else 0
         ).values
         if np.any(areas > 0):
-            fig = distribution_histogram(areas, label="Area",
-                                         units=profile.spatial_results.get("crs_units", ""))
+            fig = distribution_histogram(
+                areas, label="Area", units=profile.spatial_results.get("crs_units", "")
+            )
             charts["area_distribution"] = _fig_to_base64(fig)
 
         perimeters = profile.gdf.geometry.apply(
             lambda g: g.length if g is not None and not g.is_empty else 0
         ).values
         if np.any(perimeters > 0):
-            fig = distribution_histogram(perimeters, label="Perimeter",
-                                         units=profile.spatial_results.get("crs_units", ""))
+            fig = distribution_histogram(
+                perimeters, label="Perimeter", units=profile.spatial_results.get("crs_units", "")
+            )
             charts["perimeter_distribution"] = _fig_to_base64(fig)
 
     elif "line" in dom_type:
@@ -487,8 +560,9 @@ def generate_all_charts(profile) -> dict[str, str]:
             lambda g: g.length if g is not None and not g.is_empty else 0
         ).values
         if np.any(lengths > 0):
-            fig = distribution_histogram(lengths, label="Length",
-                                         units=profile.spatial_results.get("crs_units", ""))
+            fig = distribution_histogram(
+                lengths, label="Length", units=profile.spatial_results.get("crs_units", "")
+            )
             charts["length_distribution"] = _fig_to_base64(fig)
 
     return charts

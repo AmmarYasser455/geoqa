@@ -539,11 +539,7 @@ class ReportGenerator:
         geometry_type_dist = self._profile.geometry_results.get("geometry_types", {})
 
         # CRS info
-        crs_info = {
-            k: v
-            for k, v in self._profile.spatial_results.items()
-            if k.startswith("crs_")
-        }
+        crs_info = {k: v for k, v in self._profile.spatial_results.items() if k.startswith("crs_")}
 
         # Render template
         template = jinja2.Template(REPORT_TEMPLATE)
