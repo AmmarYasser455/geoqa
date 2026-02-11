@@ -177,9 +177,7 @@ class TestGeoProfile:
         import logging
         from shapely.geometry import Point
 
-        gdf = gpd.GeoDataFrame(
-            {"v": [1]}, geometry=[Point(0, 0)], crs="EPSG:4326"
-        )
+        gdf = gpd.GeoDataFrame({"v": [1]}, geometry=[Point(0, 0)], crs="EPSG:4326")
         path = tmp_path / "small.geojson"
         gdf.to_file(path, driver="GeoJSON")
 

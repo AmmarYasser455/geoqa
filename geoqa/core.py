@@ -94,8 +94,7 @@ class GeoProfile:
             file_size_mb = self._source_path.stat().st_size / 1e6
             if file_size_mb > 500:
                 logger.warning(
-                    "Large file (%.0f MB) — loading may be slow "
-                    "and require significant memory",
+                    "Large file (%.0f MB) — loading may be slow " "and require significant memory",
                     file_size_mb,
                 )
 
@@ -104,8 +103,7 @@ class GeoProfile:
 
             if len(self._gdf) > 100_000:
                 logger.warning(
-                    "Large dataset (%s features) — profiling may take "
-                    "several minutes",
+                    "Large dataset (%s features) — profiling may take " "several minutes",
                     f"{len(self._gdf):,}",
                 )
 
