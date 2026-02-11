@@ -12,7 +12,6 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING, Union
 
-import jinja2
 from jinja2 import Environment, select_autoescape
 
 if TYPE_CHECKING:
