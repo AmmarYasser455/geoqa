@@ -1,0 +1,98 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geoqa"
+version = "0.1.0"
+description = "GeoQA: A Python package for geospatial data quality assessment and interactive profiling"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "GeoQA Contributors"},
+]
+keywords = [
+    "gis",
+    "geospatial",
+    "data-quality",
+    "profiling",
+    "vector-data",
+    "shapefile",
+    "geopandas",
+    "interactive-mapping",
+    "quality-assessment",
+    "geopython",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = [
+    "geopandas>=0.14.0",
+    "shapely>=2.0.0",
+    "folium>=0.15.0",
+    "matplotlib>=3.7.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "jinja2>=3.1.0",
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "branca>=0.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "isort>=5.12",
+    "ruff>=0.1.0",
+]
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.0",
+    "mkdocstrings[python]>=0.24.0",
+]
+all = [
+    "geoqa[dev,docs]",
+]
+
+[project.scripts]
+geoqa = "geoqa.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/geoqa/geoqa"
+Documentation = "https://geoqa.readthedocs.io"
+Repository = "https://github.com/geoqa/geoqa"
+Issues = "https://github.com/geoqa/geoqa/issues"
+Changelog = "https://github.com/geoqa/geoqa/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+include = ["geoqa*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py39"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
