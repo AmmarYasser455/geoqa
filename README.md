@@ -29,6 +29,53 @@
 - **Generate** self-contained HTML quality reports with charts and tables
 - **Automate** QA/QC workflows via CLI or Python API
 
+## Ecosystem
+
+GeoQA is the data-readiness gate in a two-stage geospatial quality control pipeline alongside [OVC](https://github.com/AmmarYasser455/ovc) and [OVC ArcGIS Pro](https://github.com/AmmarYasser455/ovc-arcgis-pro).
+
+```mermaid
+flowchart LR
+    A["Geospatial\nData"] --> B
+
+    subgraph B["GeoQA"]
+        direction TB
+        B1["Score"]
+        B2["Profile"]
+        B3["Validate"]
+        B4["Report"]
+    end
+
+    B -- "Pre-check\nGate" --> C
+    B -- "Pre-check\nGate" --> E
+
+    subgraph C["OVC Python"]
+        C1["Road QC"]
+        C2["Building Overlaps"]
+        C3["Road Conflicts"]
+    end
+
+    subgraph E["OVC ArcGIS Pro"]
+        E1["5 Toolbox Tools"]
+    end
+
+    C --> D["QC Results\n& Web Maps"]
+    E --> D
+
+    style A fill:#fff,stroke:#e91e63,color:#000
+    style B fill:#2e9e49,stroke:#1b7a33,color:#fff
+    style B1 fill:#fff,stroke:#e91e63,color:#000
+    style B2 fill:#fff,stroke:#e91e63,color:#000
+    style B3 fill:#fff,stroke:#e91e63,color:#000
+    style B4 fill:#fff,stroke:#e91e63,color:#000
+    style C fill:#2962ff,stroke:#1a44b8,color:#fff
+    style C1 fill:#fff,stroke:#e91e63,color:#000
+    style C2 fill:#fff,stroke:#e91e63,color:#000
+    style C3 fill:#fff,stroke:#e91e63,color:#000
+    style E fill:#7c3aed,stroke:#5b21b6,color:#fff
+    style E1 fill:#fff,stroke:#e91e63,color:#000
+    style D fill:#fff,stroke:#2962ff,color:#000
+```
+
 ## Key Features
 
 | Feature | Description |
