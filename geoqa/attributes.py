@@ -3,6 +3,8 @@ Attribute profiling module.
 
 Generates statistical profiles for all non-geometry columns including
 data types, null counts, unique values, and descriptive statistics.
+
+Author: Ammar Yasser Abdalazim
 """
 
 from __future__ import annotations

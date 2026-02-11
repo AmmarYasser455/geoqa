@@ -3,6 +3,8 @@ Spatial analysis module.
 
 Computes CRS information, spatial extent, area/length statistics,
 and geometric measurements for the dataset.
+
+Author: Ammar Yasser Abdalazim
 """
 
 from __future__ import annotations

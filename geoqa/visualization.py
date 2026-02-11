@@ -3,6 +3,8 @@ Interactive map visualization module.
 
 Creates folium-based interactive maps with quality issue highlighting,
 custom styling, and data popups.
+
+Author: Ammar Yasser Abdalazim
 """
 
 from __future__ import annotations

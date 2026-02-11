@@ -1,5 +1,7 @@
 """
 Utility functions for GeoQA.
+
+Author: Ammar Yasser Abdalazim
 """
 
 from __future__ import annotations

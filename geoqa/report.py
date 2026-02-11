@@ -3,6 +3,8 @@ HTML report generation module.
 
 Creates comprehensive, self-contained HTML quality reports
 with embedded matplotlib charts, maps, and statistics tables.
+
+Author: Ammar Yasser Abdalazim
 """
 
 from __future__ import annotations

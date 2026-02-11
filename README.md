@@ -181,6 +181,12 @@ pytest
 black geoqa/ tests/
 ```
 
+## Author
+
+**Ammar Yasser Abdalazim**
+
+- GitHub: [@AmmarYasser455](https://github.com/AmmarYasser455)
+
 ## License
 
 [MIT License](LICENSE)
@@ -194,6 +200,7 @@ GeoQA is inspired by the development methodology and open-source philosophy of [
 ```bibtex
 @software{geoqa2026,
   title   = {GeoQA: A Python Package for Geospatial Data Quality Assessment},
+  author  = {Ammar Yasser Abdalazim},
   year    = {2026},
   url     = {https://github.com/AmmarYasser455/geoqa},
   license = {MIT}

@@ -5,6 +5,8 @@ GeoQA provides automated quality checks, statistical profiling, and interactive
 visualization for geospatial vector data. It follows the "one-liner" philosophy:
 profile any geodataset with a single function call.
 
+Author: Ammar Yasser Abdalazim
+
 Example:
     >>> import geoqa
     >>> profile = geoqa.profile("data.shp")
@@ -14,7 +16,7 @@ Example:
 """
 
 __version__ = "0.1.0"
-__author__ = "GeoQA Contributors"
+__author__ = "Ammar Yasser Abdalazim"
 
 from geoqa.core import GeoProfile, profile
 from geoqa.charts import generate_all_charts, quality_gauge

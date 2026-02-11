@@ -3,6 +3,8 @@ Geometry validation and quality checking module.
 
 Performs comprehensive geometry checks including validity, emptiness,
 duplicates, and type consistency.
+
+Author: Ammar Yasser Abdalazim
 """
 
 from __future__ import annotations

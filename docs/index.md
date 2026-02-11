@@ -31,3 +31,9 @@ profile.to_html("report.html")  # HTML report
 - [Installation](installation.md)
 - [Quick Start Guide](quick-start.md)
 - [API Reference](api-reference.md)
+
+## Author
+
+**GeoQA** is designed and maintained by **Ammar Yasser Abdalazim**.
+
+- GitHub: [@AmmarYasser455](https://github.com/AmmarYasser455)

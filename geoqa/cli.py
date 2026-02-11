@@ -3,6 +3,8 @@ CLI interface for GeoQA.
 
 Provides command-line access to geospatial data profiling and quality
 assessment via the `geoqa` command.
+
+Author: Ammar Yasser Abdalazim
 """
 
 from __future__ import annotations

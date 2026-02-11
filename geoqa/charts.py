@@ -7,6 +7,8 @@ Generates publication-quality charts for:
 - Quality score gauge (donut chart)
 - Area/length distribution (histogram)
 - Null heatmap (matrix visualization)
+
+Author: Ammar Yasser Abdalazim
 """
 
 from __future__ import annotations

@@ -3,6 +3,8 @@ Core module: GeoProfile class — the central entry point for GeoQA.
 
 Provides one-liner geospatial data profiling with quality assessment,
 attribute statistics, and interactive visualization.
+
+Author: Ammar Yasser Abdalazim
 """
 
 from __future__ import annotations
