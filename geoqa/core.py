@@ -9,6 +9,7 @@ Author: Ammar Yasser Abdalazim
 
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 from typing import Optional, Union
 
@@ -20,6 +21,8 @@ from geoqa.geometry import GeometryChecker
 from geoqa.report import ReportGenerator
 from geoqa.spatial import SpatialAnalyzer
 from geoqa.visualization import MapVisualizer
+
+logger = logging.getLogger("geoqa")
 
 
 def profile(
@@ -86,8 +89,25 @@ class GeoProfile:
             self._source_path = Path(data)
             if not self._source_path.exists():
                 raise FileNotFoundError(f"File not found: {self._source_path}")
+
+            # Warn about large files before loading
+            file_size_mb = self._source_path.stat().st_size / 1e6
+            if file_size_mb > 500:
+                logger.warning(
+                    "Large file (%.0f MB) — loading may be slow "
+                    "and require significant memory",
+                    file_size_mb,
+                )
+
             self._gdf = gpd.read_file(str(self._source_path))
             self._name = name or self._source_path.stem
+
+            if len(self._gdf) > 100_000:
+                logger.warning(
+                    "Large dataset (%s features) — profiling may take "
+                    "several minutes",
+                    f"{len(self._gdf):,}",
+                )
 
         # Initialize analyzers
         self._geometry_checker = GeometryChecker(self._gdf)
