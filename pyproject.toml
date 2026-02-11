@@ -72,11 +72,11 @@ all = [
 geoqa = "geoqa.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/geoqa/geoqa"
-Documentation = "https://geoqa.readthedocs.io"
-Repository = "https://github.com/geoqa/geoqa"
-Issues = "https://github.com/geoqa/geoqa/issues"
-Changelog = "https://github.com/geoqa/geoqa/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/AmmarYasser455/geoqa"
+Documentation = "https://github.com/AmmarYasser455/geoqa#readme"
+Repository = "https://github.com/AmmarYasser455/geoqa"
+Issues = "https://github.com/AmmarYasser455/geoqa/issues"
+Changelog = "https://github.com/AmmarYasser455/geoqa/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 include = ["geoqa*"]
