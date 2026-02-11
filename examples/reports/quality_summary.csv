@@ -1,0 +1,7 @@
+Dataset,Features,Columns,Type,CRS,Invalid Geom,Empty Geom,Null Attrs,Quality Score,Report
+october,1,5,Polygon,EPSG:32636,0,0,0,100.0,reports/october_report.html
+mrkz_nasr,1,7,Polygon,EPSG:4229,0,0,0,100.0,reports/mrkz_nasr_report.html
+giza_buildings,24615,15,Polygon,EPSG:4326,1,0,1118,99.9,reports/giza_buildings_report.html
+Qena_shapefile,1,9,Polygon,EPSG:4229,0,0,1,96.7,reports/Qena_shapefile_report.html
+giza_roads,8981,7,LineString,EPSG:4326,0,0,12413,94.1,reports/giza_roads_report.html
+giza,1,6,Polygon,EPSG:32636,0,0,3,85.0,reports/giza_report.html

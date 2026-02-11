@@ -13,7 +13,7 @@ Example:
     >>> profile.to_html("report.html")
 """
 
-__version__ = "0.2.0"
+__version__ = "0.1.0"
 __author__ = "GeoQA Contributors"
 
 from geoqa.core import GeoProfile, profile
