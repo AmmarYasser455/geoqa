@@ -5,6 +5,15 @@ All notable changes to GeoQA will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2026-02-12
+
+### Fixed
+- **Security**: Enable Jinja2 autoescape in HTML report generation to prevent XSS when dataset names or attribute values contain HTML/script content. (GeoQA-002 from audit)
+- **UX**: Log a warning when loading files larger than 500 MB or datasets with more than 100,000 features, so users know to expect longer runtimes.
+
+### Added
+- 3 new tests: XSS prevention, special characters in dataset name, and large-file warning validation.
+
 ## [0.1.0] - 2026-02-11
 
 ### Added

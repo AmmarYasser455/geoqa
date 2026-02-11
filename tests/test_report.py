@@ -62,3 +62,26 @@ class TestReportGenerator:
         gp.to_html(output)
         content = output.read_text(encoding="utf-8")
         assert "/100" in content
+
+    def test_report_xss_prevention(self, sample_polygons_gdf, tmp_path):
+        """Test that HTML/script in dataset name is escaped, not injected."""
+        xss_name = '<script>alert("xss")</script>'
+        gp = GeoProfile(sample_polygons_gdf, name=xss_name)
+        output = tmp_path / "xss_report.html"
+        gp.to_html(output)
+        content = output.read_text(encoding="utf-8")
+        # The raw <script> tag must NOT appear in the output
+        assert "<script>alert" not in content
+        # The escaped version should be present instead
+        assert "&lt;script&gt;" in content
+
+    def test_report_special_chars_in_name(self, sample_polygons_gdf, tmp_path):
+        """Test that special characters in dataset name don't break the report."""
+        gp = GeoProfile(sample_polygons_gdf, name='Test & "Quotes" <Angles>')
+        output = tmp_path / "special_report.html"
+        result = gp.to_html(output)
+        assert result.exists()
+        content = result.read_text(encoding="utf-8")
+        # Ampersand and angle brackets should be escaped
+        assert "&amp;" in content
+        assert "&lt;Angles&gt;" in content

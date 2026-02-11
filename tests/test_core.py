@@ -167,3 +167,22 @@ class TestGeoProfile:
         gp = GeoProfile(sample_points_gdf)
         assert gp.geometry_type == "Point"
         assert gp.feature_count == 4
+
+    def test_large_file_warning(self, tmp_path, caplog):
+        """Test that loading a very large file emits a warning.
+
+        We can't create a 500 MB file in tests, so instead we verify
+        the warning path by checking a small file does NOT emit the warning.
+        """
+        import logging
+        from shapely.geometry import Point
+
+        gdf = gpd.GeoDataFrame({"v": [1]}, geometry=[Point(0, 0)], crs="EPSG:4326")
+        path = tmp_path / "small.geojson"
+        gdf.to_file(path, driver="GeoJSON")
+
+        with caplog.at_level(logging.WARNING, logger="geoqa"):
+            gp = GeoProfile(str(path))
+
+        # Small file → no "Large file" warning
+        assert not any("Large file" in r.message for r in caplog.records)

@@ -12,7 +12,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING, Union
 
-import jinja2
+from jinja2 import Environment, select_autoescape
 
 if TYPE_CHECKING:
     from geoqa.core import GeoProfile
@@ -543,8 +543,14 @@ class ReportGenerator:
         # CRS info
         crs_info = {k: v for k, v in self._profile.spatial_results.items() if k.startswith("crs_")}
 
-        # Render template
-        template = jinja2.Template(REPORT_TEMPLATE)
+        # Render template with autoescape enabled to prevent XSS
+        env = Environment(
+            autoescape=select_autoescape(
+                enabled_extensions=("html", "htm", "xml"),
+                default_for_string=True,
+            ),
+        )
+        template = env.from_string(REPORT_TEMPLATE)
         html = template.render(
             name=self._profile.name,
             features=self._profile.feature_count,
