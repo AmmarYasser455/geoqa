@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/geoqa/geoqa/main/docs/assets/logo.png" alt="GeoQA Logo" width="200">
+  <img src="https://raw.githubusercontent.com/AmmarYasser455/geoqa/main/docs/geoqa_logo.png" alt="GeoQA Logo" width="200">
 </p>
 
 <h1 align="center">GeoQA</h1>
@@ -16,8 +16,7 @@
   <a href="https://pypi.org/project/geoqa/"><img src="https://img.shields.io/pypi/v/geoqa.svg?style=flat-square" alt="PyPI"></a>
   <a href="https://pypi.org/project/geoqa/"><img src="https://img.shields.io/pypi/pyversions/geoqa.svg?style=flat-square" alt="Python"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" alt="License"></a>
-  <a href="https://github.com/geoqa/geoqa/actions"><img src="https://img.shields.io/github/actions/workflow/status/geoqa/geoqa/ci.yml?style=flat-square" alt="CI"></a>
-  <a href="https://geoqa.readthedocs.io"><img src="https://img.shields.io/readthedocs/geoqa?style=flat-square" alt="Docs"></a>
+  <a href="https://github.com/AmmarYasser455/geoqa/actions"><img src="https://img.shields.io/github/actions/workflow/status/AmmarYasser455/geoqa/ci.yml?style=flat-square" alt="CI"></a>
 </p>
 
 ---
@@ -59,7 +58,7 @@ pip install geoqa
 ### From source (development)
 
 ```bash
-git clone https://github.com/geoqa/geoqa.git
+git clone https://github.com/AmmarYasser455/geoqa.git
 cd geoqa
 pip install -e ".[dev]"
 ```
@@ -239,7 +238,7 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for gui
 
 ```bash
 # Clone the repository
-git clone https://github.com/geoqa/geoqa.git
+git clone https://github.com/AmmarYasser455/geoqa.git
 cd geoqa
 
 # Install in development mode
@@ -273,7 +272,7 @@ If you find GeoQA useful in your work, please consider citing:
 @software{geoqa2026,
   title = {GeoQA: A Python Package for Geospatial Data Quality Assessment},
   year = {2026},
-  url = {https://github.com/geoqa/geoqa},
+  url = {https://github.com/AmmarYasser455/geoqa},
   license = {MIT}
 }
 ```
