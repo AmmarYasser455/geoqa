@@ -107,6 +107,9 @@ class GeoProfile:
                     f"{len(self._gdf):,}",
                 )
 
+        if self._gdf.empty:
+            raise ValueError("Cannot profile an empty dataset.")
+
         # Initialize analyzers
         self._geometry_checker = GeometryChecker(self._gdf)
         self._attribute_profiler = AttributeProfiler(self._gdf)
@@ -413,7 +416,7 @@ class GeoProfile:
         empty = self._geometry_results.get("empty_count", 0)
         score += ((total - empty) / total) * 15
 
-        return min(score, 100.0)
+        return max(0.0, min(score, 100.0))
 
     def _print_summary(self, data: dict) -> None:
         """Pretty-print the summary using rich formatting."""

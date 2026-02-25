@@ -361,7 +361,7 @@ def null_heatmap(
         ax.text(
             0.5,
             0.5,
-            "No null values — all columns complete ✓",
+            "No null values — all columns complete ",
             ha="center",
             va="center",
             fontsize=11,

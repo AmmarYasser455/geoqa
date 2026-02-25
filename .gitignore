@@ -1,40 +1,17 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-
-# Distribution / packaging
-dist/
+*.so
 build/
+dist/
 *.egg-info/
-*.egg
-
-# Virtual environments
-.venv/
+.eggs/
+.env
 venv/
-env/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-
-# Testing
 .pytest_cache/
 .coverage
 htmlcov/
-
-# Documentation
-site/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Output
+tests/data/*.gpkg
 outputs/
-*.html
-!docs/**/*.html
+.DS_Store
+examples/reports/

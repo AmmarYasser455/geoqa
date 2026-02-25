@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to GeoQA! This document provides guidelines and instructions for contributing.
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -35,7 +35,7 @@ Thank you for your interest in contributing to GeoQA! This document provides gui
    pytest
    ```
 
-## 📋 Development Workflow
+##  Development Workflow
 
 1. **Create a branch** for your work:
    ```bash
@@ -64,7 +64,7 @@ Thank you for your interest in contributing to GeoQA! This document provides gui
 
 7. **Push and create a Pull Request**.
 
-## 🎨 Code Style
+##  Code Style
 
 - **Formatter**: Black (line length = 100)
 - **Import sorting**: isort (black profile)
@@ -90,7 +90,7 @@ def check_validity(gdf: gpd.GeoDataFrame) -> dict[str, Any]:
     ...
 ```
 
-## 📝 Commit Messages
+##  Commit Messages
 
 Follow [Conventional Commits](https://www.conventionalcommits.org/):
 
@@ -102,16 +102,16 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 - `style:` — Formatting changes
 - `chore:` — Build/CI changes
 
-## 🧪 Testing
+##  Testing
 
 - Write tests in the `tests/` directory using pytest.
 - Aim for comprehensive coverage of new functionality.
 - Use fixtures for common test data.
 
-## 📜 Code of Conduct
+##  Code of Conduct
 
 Be respectful and constructive. We follow the [Contributor Covenant](https://www.contributor-covenant.org/) Code of Conduct.
 
-## ❓ Questions?
+##  Questions?
 
 Open an issue or start a discussion on GitHub. We're happy to help!

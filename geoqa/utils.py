@@ -11,6 +11,8 @@ from pathlib import Path
 from typing import Optional, Union
 
 import geopandas as gpd
+import numpy as np
+import pandas as pd
 
 
 def load_geodata(
@@ -98,3 +100,22 @@ def get_file_info(filepath: Union[str, Path]) -> dict:
         "size_human": format_bytes(stat.st_size),
         "modified": stat.st_mtime,
     }
+
+def make_serializable(obj):
+    """Recursively convert numpy/pandas types to JSON-safe Python primitives."""
+    if isinstance(obj, dict):
+        return {k: make_serializable(v) for k, v in obj.items()}
+    elif isinstance(obj, (list, tuple)):
+        return [make_serializable(x) for x in obj]
+    elif isinstance(obj, (np.integer,)):
+        return int(obj)
+    elif isinstance(obj, (np.floating,)):
+        return float(obj)
+    elif isinstance(obj, np.bool_):
+        return bool(obj)
+    elif isinstance(obj, np.ndarray):
+        return make_serializable(obj.tolist())
+    elif isinstance(obj, pd.Timestamp):
+        return str(obj)
+    return obj
+

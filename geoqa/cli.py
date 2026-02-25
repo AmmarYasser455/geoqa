@@ -44,13 +44,13 @@ def profile(filepath: str, name: str | None):
     """
     from geoqa.core import GeoProfile
 
-    click.echo(f"\n🌍 GeoQA — Profiling: {filepath}\n")
+    click.echo(f"\n GeoQA — Profiling: {filepath}\n")
 
     try:
         gp = GeoProfile(filepath, name=name)
         gp.summary(print_output=True)
     except Exception as e:
-        click.echo(f"❌ Error: {e}", err=True)
+        click.echo(f" Error: {e}", err=True)
         raise SystemExit(1)
 
 
@@ -65,14 +65,14 @@ def report(filepath: str, output: str, name: str | None):
     """
     from geoqa.core import GeoProfile
 
-    click.echo(f"\n🌍 GeoQA — Generating report for: {filepath}\n")
+    click.echo(f"\n GeoQA — Generating report for: {filepath}\n")
 
     try:
         gp = GeoProfile(filepath, name=name)
         out_path = gp.to_html(output)
-        click.echo(f"✅ Report saved to: {out_path}")
+        click.echo(f" Report saved to: {out_path}")
     except Exception as e:
-        click.echo(f"❌ Error: {e}", err=True)
+        click.echo(f" Error: {e}", err=True)
         raise SystemExit(1)
 
 
@@ -85,7 +85,7 @@ def check(filepath: str):
     """
     from geoqa.core import GeoProfile
 
-    click.echo(f"\n🌍 GeoQA — Quality checks for: {filepath}\n")
+    click.echo(f"\n GeoQA — Quality checks for: {filepath}\n")
 
     try:
         gp = GeoProfile(filepath)
@@ -93,13 +93,13 @@ def check(filepath: str):
 
         for _, row in checks_df.iterrows():
             status_icon = (
-                "✅" if row["Status"] == "PASS" else ("❌" if row["Status"] == "FAIL" else "⚠️")
+                "" if row["Status"] == "PASS" else ("" if row["Status"] == "FAIL" else "")
             )
             click.echo(f"  {status_icon} {row['Check']}: {row['Details']}")
 
-        click.echo(f"\n  📊 Quality Score: {gp.quality_score:.1f}/100\n")
+        click.echo(f"\n   Quality Score: {gp.quality_score:.1f}/100\n")
     except Exception as e:
-        click.echo(f"❌ Error: {e}", err=True)
+        click.echo(f" Error: {e}", err=True)
         raise SystemExit(1)
 
 
@@ -113,7 +113,7 @@ def show(filepath: str, output: str | None):
     """
     from geoqa.core import GeoProfile
 
-    click.echo(f"\n🌍 GeoQA — Mapping: {filepath}\n")
+    click.echo(f"\n GeoQA — Mapping: {filepath}\n")
 
     try:
         gp = GeoProfile(filepath)
@@ -121,7 +121,7 @@ def show(filepath: str, output: str | None):
 
         if output:
             m.save(output)
-            click.echo(f"✅ Map saved to: {output}")
+            click.echo(f" Map saved to: {output}")
         else:
             # Save to temp and open in browser
             import tempfile
@@ -130,9 +130,9 @@ def show(filepath: str, output: str | None):
             with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as f:
                 m.save(f.name)
                 webbrowser.open(f"file://{f.name}")
-                click.echo("🗺️  Map opened in browser.")
+                click.echo("  Map opened in browser.")
     except Exception as e:
-        click.echo(f"❌ Error: {e}", err=True)
+        click.echo(f" Error: {e}", err=True)
         raise SystemExit(1)
 
 

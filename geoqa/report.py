@@ -163,7 +163,7 @@ REPORT_TEMPLATE = """
 </head>
 <body>
     <div class="header">
-        <div class="logo">🌍</div>
+        <div class="logo"></div>
         <h1>GeoQA Quality Report</h1>
         <div class="subtitle">{{ name }}</div>
         {% if quality_score >= 80 %}
@@ -178,22 +178,22 @@ REPORT_TEMPLATE = """
     <!-- Overview Cards -->
     <div class="grid">
         <div class="card">
-            <h3>📊 Features</h3>
+            <h3> Features</h3>
             <div class="value">{{ "{:,}".format(features) }}</div>
             <div class="label">Total features in dataset</div>
         </div>
         <div class="card">
-            <h3>📋 Columns</h3>
+            <h3> Columns</h3>
             <div class="value">{{ columns }}</div>
             <div class="label">Attribute columns</div>
         </div>
         <div class="card">
-            <h3>🔷 Geometry</h3>
+            <h3> Geometry</h3>
             <div class="value">{{ geometry_type }}</div>
             <div class="label">Dominant geometry type</div>
         </div>
         <div class="card">
-            <h3>🌐 CRS</h3>
+            <h3> CRS</h3>
             <div class="value" style="font-size:1rem;">{{ crs or 'Not Defined' }}</div>
             <div class="label">Coordinate Reference System</div>
         </div>
@@ -203,7 +203,7 @@ REPORT_TEMPLATE = """
     <div class="grid-2col">
         {% if charts.quality_gauge %}
         <div class="card">
-            <h3>🎯 Quality Score</h3>
+            <h3> Quality Score</h3>
             <div class="chart-container">
                 <img src="data:image/png;base64,{{ charts.quality_gauge }}" alt="Quality gauge" />
             </div>
@@ -211,7 +211,7 @@ REPORT_TEMPLATE = """
         {% endif %}
         {% if charts.geometry_types %}
         <div class="card">
-            <h3>🔷 Geometry Distribution</h3>
+            <h3> Geometry Distribution</h3>
             <div class="chart-container">
                 <img src="data:image/png;base64,{{ charts.geometry_types }}" alt="Geometry types" />
             </div>
@@ -221,7 +221,7 @@ REPORT_TEMPLATE = """
 
     <!-- Quality Checks -->
     <div class="section">
-        <h2>✅ Quality Checks</h2>
+        <h2> Quality Checks</h2>
         {% if charts.checks_summary %}
         <div class="chart-container">
             <img src="data:image/png;base64,{{ charts.checks_summary }}" alt="Checks summary" />
@@ -243,11 +243,11 @@ REPORT_TEMPLATE = """
                     <td><strong>{{ check.Check }}</strong></td>
                     <td>
                         {% if check.Status == 'PASS' %}
-                        <span class="status-pass">✅ PASS</span>
+                        <span class="status-pass"> PASS</span>
                         {% elif check.Status == 'FAIL' %}
-                        <span class="status-fail">❌ FAIL</span>
+                        <span class="status-fail"> FAIL</span>
                         {% else %}
-                        <span class="status-warn">⚠️ WARN</span>
+                        <span class="status-warn"> WARN</span>
                         {% endif %}
                     </td>
                     <td>{{ check.Count }}</td>
@@ -262,7 +262,7 @@ REPORT_TEMPLATE = """
     <!-- Topology Checks (if available) -->
     {% if topology %}
     <div class="section">
-        <h2>🔗 Topology Checks</h2>
+        <h2> Topology Checks</h2>
         <table>
             <thead><tr><th>Check</th><th>Result</th><th>Details</th></tr></thead>
             <tbody>
@@ -319,7 +319,7 @@ REPORT_TEMPLATE = """
 
     <!-- Spatial Information -->
     <div class="section">
-        <h2>📍 Spatial Information</h2>
+        <h2> Spatial Information</h2>
         <table>
             <tbody>
                 {% if bounds %}
@@ -340,7 +340,7 @@ REPORT_TEMPLATE = """
 
     <!-- Attribute Completeness -->
     <div class="section">
-        <h2>📊 Attribute Completeness</h2>
+        <h2> Attribute Completeness</h2>
         {% if charts.attribute_completeness %}
         <div class="chart-container">
             <img src="data:image/png;base64,{{ charts.attribute_completeness }}" alt="Attribute completeness" />
@@ -382,7 +382,7 @@ REPORT_TEMPLATE = """
     <!-- Null Heatmap -->
     {% if charts.null_heatmap %}
     <div class="section">
-        <h2>🔍 Null Value Analysis</h2>
+        <h2> Null Value Analysis</h2>
         <div class="chart-container">
             <img src="data:image/png;base64,{{ charts.null_heatmap }}" alt="Null heatmap" />
         </div>
@@ -392,7 +392,7 @@ REPORT_TEMPLATE = """
     <!-- Numeric Statistics -->
     {% if numeric_stats %}
     <div class="section">
-        <h2>🔢 Numeric Column Statistics</h2>
+        <h2> Numeric Column Statistics</h2>
         <table>
             <thead>
                 <tr>
@@ -423,7 +423,7 @@ REPORT_TEMPLATE = """
     <!-- Distribution Charts -->
     {% if charts.area_distribution or charts.length_distribution or charts.perimeter_distribution %}
     <div class="section">
-        <h2>📈 Measurement Distributions</h2>
+        <h2> Measurement Distributions</h2>
         <div class="grid-2col">
             {% if charts.area_distribution %}
             <div class="chart-container">
@@ -447,7 +447,7 @@ REPORT_TEMPLATE = """
     <!-- Geometry Type Distribution Table -->
     {% if geometry_type_dist %}
     <div class="section">
-        <h2>🔷 Geometry Type Distribution</h2>
+        <h2> Geometry Type Distribution</h2>
         <table>
             <thead>
                 <tr>
