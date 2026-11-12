@@ -101,6 +101,7 @@ def get_file_info(filepath: Union[str, Path]) -> dict:
         "modified": stat.st_mtime,
     }
 
+
 def make_serializable(obj):
     """Recursively convert numpy/pandas types to JSON-safe Python primitives."""
     if isinstance(obj, dict):
@@ -118,4 +119,3 @@ def make_serializable(obj):
     elif isinstance(obj, pd.Timestamp):
         return str(obj)
     return obj
-
