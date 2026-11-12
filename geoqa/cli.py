@@ -92,9 +92,7 @@ def check(filepath: str):
         checks_df = gp.quality_checks()
 
         for _, row in checks_df.iterrows():
-            status_icon = (
-                "" if row["Status"] == "PASS" else ("" if row["Status"] == "FAIL" else "")
-            )
+            status_icon = "" if row["Status"] == "PASS" else ("" if row["Status"] == "FAIL" else "")
             click.echo(f"  {status_icon} {row['Check']}: {row['Details']}")
 
         click.echo(f"\n   Quality Score: {gp.quality_score:.1f}/100\n")
