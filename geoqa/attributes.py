@@ -15,6 +15,10 @@ import geopandas as gpd
 import pandas as pd
 
 
+def _is_unhashable(value: Any) -> bool:
+    return isinstance(value, (list, dict, set))
+
+
 class AttributeProfiler:
     """Profiles attribute (non-geometry) columns of a GeoDataFrame.
 
@@ -92,13 +96,21 @@ class AttributeProfiler:
             Dict with column statistics.
         """
         series = self._gdf[col]
+        if series.dtype == object and series.map(_is_unhashable).any():
+            # Lists/dicts (e.g. from JSON properties) cannot be hashed for
+            # unique/value counts; profile their string representation.
+            series = series.map(lambda v: str(v) if _is_unhashable(v) else v)
         stats: dict[str, Any] = {
             "name": col,
             "dtype": str(series.dtype),
             "null_count": int(series.isnull().sum()),
             "non_null_count": int(series.notnull().sum()),
             "unique_count": int(series.nunique()),
-            "is_numeric": pd.api.types.is_numeric_dtype(series),
+            # Booleans count as numeric in pandas but numeric statistics
+            # (quantiles) are meaningless and raise for them.
+            "is_numeric": bool(
+                pd.api.types.is_numeric_dtype(series) and not pd.api.types.is_bool_dtype(series)
+            ),
         }
 
         nrows = len(series)
@@ -134,7 +146,8 @@ class AttributeProfiler:
         return {
             "mean": round(float(clean.mean()), 4),
             "median": round(float(clean.median()), 4),
-            "std": round(float(clean.std()), 4),
+            # std is NaN for a single value; report None instead
+            "std": round(float(clean.std()), 4) if len(clean) > 1 else None,
             "min": round(float(clean.min()), 4),
             "max": round(float(clean.max()), 4),
             "q25": round(float(clean.quantile(0.25)), 4),
