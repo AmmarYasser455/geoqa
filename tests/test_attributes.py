@@ -1,6 +1,8 @@
 """Tests for the attribute profiling module."""
 
+import geopandas as gpd
 import pytest
+from shapely.geometry import Point
 
 from geoqa.attributes import AttributeProfiler
 
@@ -82,6 +84,31 @@ class TestAttributeProfiler:
         profiler = AttributeProfiler(sample_polygons_gdf)
         with pytest.raises(ValueError):
             profiler.get_column_profile("nonexistent")
+
+    def test_boolean_column_is_categorical(self):
+        """Boolean columns must not crash numeric statistics."""
+        gdf = gpd.GeoDataFrame(
+            {"flag": [True, False, True]}, geometry=[Point(i, 0) for i in range(3)]
+        )
+        results = AttributeProfiler(gdf).profile_all()
+        stats = results["column_stats"]["flag"]
+        assert stats["is_numeric"] is False
+        assert stats["most_common"] == "True"
+        assert "flag" in results["categorical_columns"]
+
+    def test_single_value_std_is_none(self):
+        """A single non-null value has no standard deviation (not NaN)."""
+        gdf = gpd.GeoDataFrame({"v": [1.0]}, geometry=[Point(0, 0)])
+        assert AttributeProfiler(gdf).get_column_profile("v")["std"] is None
+
+    def test_unhashable_values(self):
+        """Dict/list cells are profiled by their string form."""
+        gdf = gpd.GeoDataFrame(
+            {"meta": [{"a": 1}, [1, 2], None]}, geometry=[Point(i, 0) for i in range(3)]
+        )
+        stats = AttributeProfiler(gdf).get_column_profile("meta")
+        assert stats["unique_count"] == 2
+        assert stats["null_count"] == 1
 
     def test_points_with_nulls(self, sample_points_gdf):
         """Test profiling point data with null values."""
