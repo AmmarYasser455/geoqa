@@ -98,7 +98,11 @@ class AttributeProfiler:
             "null_count": int(series.isnull().sum()),
             "non_null_count": int(series.notnull().sum()),
             "unique_count": int(series.nunique()),
-            "is_numeric": pd.api.types.is_numeric_dtype(series),
+            # Boolean dtypes count as numeric in pandas but do not support
+            # quantile/arithmetic statistics, so profile them as categorical.
+            "is_numeric": bool(
+                pd.api.types.is_numeric_dtype(series) and not pd.api.types.is_bool_dtype(series)
+            ),
         }
 
         nrows = len(series)

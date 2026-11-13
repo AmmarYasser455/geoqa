@@ -5,6 +5,26 @@ import pytest
 from geoqa.attributes import AttributeProfiler
 
 
+def test_boolean_column_profiled_as_categorical():
+    """Boolean columns (plain and nullable) must not crash profiling."""
+    import geopandas as gpd
+    import pandas as pd
+    from shapely.geometry import Point
+
+    gdf = gpd.GeoDataFrame(
+        {
+            "flag": [True, False, True],
+            "nflag": pd.array([True, None, False], dtype="boolean"),
+        },
+        geometry=[Point(0, 0), Point(1, 1), Point(2, 2)],
+    )
+    results = AttributeProfiler(gdf).profile_all()
+    assert results["numeric_columns"] == []
+    assert set(results["categorical_columns"]) == {"flag", "nflag"}
+    assert results["column_stats"]["flag"]["most_common"] == "True"
+    assert results["column_stats"]["nflag"]["null_count"] == 1
+
+
 class TestAttributeProfiler:
     """Tests for AttributeProfiler."""
 
