@@ -1,6 +1,8 @@
 """Tests for the geometry checking module."""
 
+import geopandas as gpd
 import pytest
+from shapely.geometry import Point, Polygon
 
 from geoqa.geometry import GeometryChecker
 
@@ -52,6 +54,28 @@ class TestGeometryChecker:
         checker = GeometryChecker(duplicate_geometry_gdf)
         results = checker.check_duplicates()
         assert results["duplicate_count"] >= 1
+
+    def test_null_and_empty_not_duplicates(self):
+        """Null and empty geometries must not be reported as duplicates."""
+        gdf = gpd.GeoDataFrame(
+            {"id": [1, 2, 3, 4, 5, 6]},
+            geometry=[None, None, Polygon(), Polygon(), Point(0, 0), Point(1, 1)],
+            crs="EPSG:4326",
+        )
+        results = GeometryChecker(gdf).check_duplicates()
+        assert results["duplicate_count"] == 0
+        assert results["duplicate_indices"] == []
+
+    def test_duplicates_ignore_null_rows(self):
+        """Real duplicates are still found next to null geometries."""
+        gdf = gpd.GeoDataFrame(
+            {"id": [1, 2, 3, 4]},
+            geometry=[None, Point(0, 0), None, Point(0, 0)],
+            crs="EPSG:4326",
+        )
+        results = GeometryChecker(gdf).check_duplicates()
+        assert results["duplicate_count"] == 1
+        assert results["duplicate_indices"] == [1, 3]
 
     def test_no_duplicates(self, sample_polygons_gdf):
         """Test no duplicates in unique data."""
