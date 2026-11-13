@@ -159,10 +159,12 @@ class GeometryChecker:
             wkb_values = self._gdf.geometry.apply(
                 lambda g: g.wkb if g is not None and not g.is_empty else None
             )
-            duplicated_mask = wkb_values.duplicated(keep=False)
+            # Null/empty geometries have no WKB and must not match each other.
+            has_wkb = wkb_values.notna()
+            duplicated_mask = wkb_values.duplicated(keep=False) & has_wkb
             duplicate_indices = list(self._gdf.index[duplicated_mask])
             # Count unique groups of duplicates
-            duplicate_count = int(wkb_values.duplicated(keep="first").sum())
+            duplicate_count = int((wkb_values.duplicated(keep="first") & has_wkb).sum())
         except Exception:
             duplicate_indices = []
             duplicate_count = 0
