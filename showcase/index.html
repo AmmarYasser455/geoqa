@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Is Natural Earth's Africa country layer ready to publish as GeoJSON?</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  body { margin: 0; font-family: system-ui, sans-serif; }
+  header { padding: 8px 14px; background: #f6f8fa; border-bottom: 1px solid #d0d7de; }
+  h1 { font-size: 1.1rem; margin: 0 0 4px; }
+  p { margin: 0; font-size: 0.85rem; line-height: 1.35; }
+  #map { height: calc(100vh - 92px); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Is Natural Earth's Africa country layer ready to publish as GeoJSON?</h1>
+  <p>GeoQA checked the 51 African countries of the Natural Earth 1:110m layer: validity, duplicates, overlaps, ring order and coordinate precision.</p>
+  <p>Click a country for its check results. Served by <a href="https://github.com/AmmarYasser455/geoqa">GeoQA</a>. Open this page through a web server (python -m http.server) so the GeoJSON can load.</p>
+</header>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  var map = L.map('map');
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Data: Natural Earth (public domain)'
+  }).addTo(map);
+  function color(a) {
+    return a > 1000000 ? '#08306b' : a > 500000 ? '#2171b5' : a > 200000 ? '#6baed6'
+         : a > 50000 ? '#c6dbef' : '#f7fbff';
+  }
+  function popup(p) {
+    var rows = ['name', 'iso_a3', 'pop_est', 'area_km2', 'vertices',
+                'clockwise_exterior_in_source', 'over_8_decimals_in_source',
+                'overlaps_neighbour', 'invalid_geometry'];
+    return '<table>' + rows.map(function (k) {
+      return '<tr><td><b>' + k + '</b></td><td>' + p[k] + '</td></tr>';
+    }).join('') + '</table>';
+  }
+  fetch('map.geojson').then(function (r) { return r.json(); }).then(function (data) {
+    var layer = L.geoJSON(data, {
+      style: function (f) {
+        var egy = f.properties.iso_a3 === 'EGY';
+        return { color: egy ? '#d62728' : '#333', weight: egy ? 3 : 1,
+                 fillColor: color(f.properties.area_km2), fillOpacity: 0.7 };
+      },
+      onEachFeature: function (f, l) { l.bindPopup(popup(f.properties)); }
+    }).addTo(map);
+    map.fitBounds(layer.getBounds());
+  });
+</script>
+</body>
+</html>
