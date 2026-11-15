@@ -197,6 +197,14 @@ profile.to_html("report.html")
 
 Reports include quality score badges, dataset overview cards, quality check tables with pass/fail/warn indicators, spatial extent information, attribute completeness bars, numeric column statistics, and geometry type distributions.
 
+## Showcase
+
+GeoQA run on real data: are Natural Earth's 51 African country polygons clean enough to publish as GeoJSON?
+
+![map](showcase/map.png)
+
+See [showcase/](showcase/) for the [report](showcase/README.md), the [web map](showcase/index.html), the [notebook](showcase/showcase.ipynb) and the [GeoJSON result](showcase/map.geojson).
+
 ## Supported Formats
 
 All vector formats readable by GeoPandas/Fiona: Shapefile, GeoJSON, GeoPackage, KML, GML, CSV with geometry, File Geodatabase, and more via GDAL/OGR drivers.
