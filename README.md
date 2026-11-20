@@ -1,5 +1,8 @@
 <p align="center">
-  <img src="docs/geoqa_logo.png" alt="geoqa logo" width="112">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/logo-dark.svg">
+    <img src="assets/brand/logo.svg" alt="geoqa logo" width="120">
+  </picture>
 </p>
 
 <h1 align="center">GeoQA</h1>
