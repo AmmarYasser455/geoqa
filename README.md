@@ -33,6 +33,8 @@
 
 GeoQA is the data-readiness gate in a two-stage geospatial quality control pipeline alongside [OVC](https://github.com/AmmarYasser455/ovc) and [OVC ArcGIS Pro](https://github.com/AmmarYasser455/ovc-arcgis-pro).
 
+**See it in 5 minutes:** the [GeoQA → OVC walkthrough](https://github.com/AmmarYasser455/ovc/blob/main/examples/geoqa-to-ovc/README.md) profiles a tiny dataset with GeoQA, then finds the overlapping buildings and the building on a road with OVC.
+
 ```mermaid
 flowchart LR
     A["Geospatial\nData"] --> B

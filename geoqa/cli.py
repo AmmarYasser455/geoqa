@@ -10,9 +10,23 @@ Author: Ammar Yasser Abdalazim
 from __future__ import annotations
 
 
+import sys
+
 import click
 
 from geoqa import __version__
+
+
+def _make_console_safe(*streams) -> None:
+    """Replace characters the console can't encode instead of crashing.
+
+    The default Windows console (cp1252) can't print the emoji GeoQA uses,
+    which used to stop every command with UnicodeEncodeError.
+    """
+    for stream in streams or (sys.stdout, sys.stderr):
+        encoding = (getattr(stream, "encoding", None) or "").lower().replace("-", "")
+        if encoding != "utf8" and hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="replace")
 
 
 @click.group()
@@ -31,7 +45,7 @@ def main():
 
         geoqa check data.geojson
     """
-    pass
+    _make_console_safe()
 
 
 @main.command()
