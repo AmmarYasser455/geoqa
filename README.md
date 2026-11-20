@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/AmmarYasser455/geoqa/main/docs/geoqa_logo.png" alt="GeoQA Logo" width="200">
+  <img src="docs/geoqa_logo.png" alt="geoqa logo" width="112">
 </p>
 
 <h1 align="center">GeoQA</h1>
